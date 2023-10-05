@@ -1,5 +1,6 @@
 import { Exception } from "../util/exception.js";
 import logger from "../util/logger.js";
+import { CastError } from "mongoose";
 
 export const notFound = (req, res, next) => {
   res.status(404);
@@ -19,6 +20,10 @@ export const notFound = (req, res, next) => {
 export const errorHandler = (err, _req, res, _next) => {
   if (err instanceof Exception) {
     return res.status(err.statusCode).json({ error: err.message });
+  }
+
+  if (err instanceof CastError) {
+    return res.status(400).json({ error: err.message });
   }
 
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;

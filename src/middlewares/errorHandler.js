@@ -1,10 +1,11 @@
-import logger from '../util/logger.js';
+import { Exception } from "../util/exception.js";
+import logger from "../util/logger.js";
 
 export const notFound = (req, res, next) => {
   res.status(404);
   const error = new Error(`404 - Not Found - ${req.originalUrl}`);
   next(error);
-}
+};
 
 /**
  * @description Express middleware function that handles errors and sends a JSON response with an error message and stack trace.
@@ -15,13 +16,16 @@ export const notFound = (req, res, next) => {
  * @param {Function} next - The next middleware function in the chain.
  * @returns {void}
  */
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, _req, res, _next) => {
+  if (err instanceof Exception) {
+    return res.status(err.statusCode).json({ error: err.message });
+  }
+
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-  res.status(statusCode);
-  res.json({
-    message: err.message,
-    stack: process.env.NODE_ENV === 'PRODUCTION' ? 'do not panic' : err.stack
-  });
+
   logger.error(err);
-  next();
-}
+  return res.status(statusCode).json({
+    message: err.message,
+    stack: process.env.NODE_ENV === "PRODUCTION" ? "do not panic" : err.stack,
+  });
+};

@@ -4,7 +4,7 @@ these routes are mounted in ../../server.js on the route '/api/models'
 */
 import { Router } from "express";
 
-import lab from "./lab.js";
+import lab from "../modules/lab/lab.js";
 import clinic from "../modules/clinic/clinic.js";
 import collaborator from "../modules/collaborator/collaborator.js";
 import inventory from "../modules/inventory/inventory.js";

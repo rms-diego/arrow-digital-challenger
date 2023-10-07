@@ -11,6 +11,6 @@ router.get("/", orderHandler.findMany);
 router.get("/:id", orderHandler.findById);
 router.post("/", orderHandler.create);
 router.put("/:id", orderHandler.update);
-router.put("/:id", orderHandler.delete);
+router.delete("/:id", orderHandler.delete);
 
 export default router;

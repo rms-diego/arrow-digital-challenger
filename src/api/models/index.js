@@ -6,7 +6,7 @@ import { Router } from "express";
 
 import lab from "./lab.js";
 import clinic from "../modules/clinic/clinic.js";
-import collaborator from "./collaborator.js";
+import collaborator from "../modules/collaborator/collaborator.js";
 import inventory from "./inventory.js";
 import order from "../modules/order/order.js";
 import service from "../modules/service/service.js";

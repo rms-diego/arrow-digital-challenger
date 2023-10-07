@@ -7,7 +7,7 @@ import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { notFound, errorHandler } from "./middlewares/errorHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 import api from "./api/index.js";
 
 const app = express();
@@ -23,7 +23,6 @@ app.use(cookieParser()); // enable cookies
 app.use("/api", api); // api routes
 
 // error handling
-app.use(notFound); // 404 full path logging
 app.use(errorHandler); // basic error handling
 
 export default app;

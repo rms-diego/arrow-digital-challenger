@@ -1,12 +1,6 @@
 import { Exception } from "../util/exception.js";
 import logger from "../util/logger.js";
-import { CastError } from "mongoose";
-
-export const notFound = (req, res, next) => {
-  res.status(404);
-  const error = new Error(`404 - Not Found - ${req.originalUrl}`);
-  next(error);
-};
+import { Error } from "mongoose";
 
 /**
  * @description Express middleware function that handles errors and sends a JSON response with an error message and stack trace.
@@ -22,14 +16,12 @@ export const errorHandler = (err, _req, res, _next) => {
     return res.status(err.statusCode).json({ error: err.message });
   }
 
-  if (err instanceof CastError) {
+  if (err instanceof Error.CastError || err instanceof Error.ValidationError) {
     return res.status(400).json({ error: err.message });
   }
 
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-
   logger.error(err);
-  return res.status(statusCode).json({
+  return res.status(500).json({
     message: err.message,
     stack: process.env.NODE_ENV === "PRODUCTION" ? "do not panic" : err.stack,
   });

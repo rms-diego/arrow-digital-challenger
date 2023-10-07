@@ -11,7 +11,7 @@ import inventory from "../modules/inventory/inventory.js";
 import order from "../modules/order/order.js";
 import service from "../modules/service/service.js";
 import user from "../modules/user/user.js";
-import pandaScan from "./pandaScan.js";
+import pandaScan from "../modules/panda-scan/panda-scan.js";
 
 const router = Router();
 

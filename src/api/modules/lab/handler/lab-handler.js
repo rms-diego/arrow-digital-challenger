@@ -46,6 +46,14 @@ export class LabHandler {
    * @param {Express<Response>} res the response object
    */
   create = async (req, res) => {
+    const { name } = req.body;
+
+    const labFound = await this.#labModel.findOne({ name });
+
+    if (labFound) {
+      throw new Exception("lab already exists", 400);
+    }
+
     const lab = new this.#labModel(req.body);
     await lab.save();
 

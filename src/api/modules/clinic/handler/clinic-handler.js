@@ -46,6 +46,14 @@ export class ClinicHandler {
    * @param {Express<Response>} res the response object
    */
   create = async (req, res) => {
+    const { name } = req.body;
+
+    const clinicFound = await this.#clinicModel.findOne({ name });
+
+    if (clinicFound) {
+      throw new Exception("clinic already exists", 400);
+    }
+
     const clinic = new this.#clinicModel(req.body);
     await clinic.save();
 

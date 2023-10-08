@@ -33,8 +33,6 @@ export class UserHandler {
   findById = async (req, res) => {
     const userFound = await this.#userModel.findById(req.params.id);
 
-    console.log(userFound);
-
     return res.status(200).json(userFound);
   };
 
@@ -45,6 +43,14 @@ export class UserHandler {
    */
 
   create = async (req, res) => {
+    const { email } = req.body;
+
+    const userFound = await this.#userModel.findOne({ email });
+
+    if (userFound) {
+      throw new Exception("user already exists", 400);
+    }
+
     const user = new this.#userModel(req.body);
     const userCreated = await user.save();
 

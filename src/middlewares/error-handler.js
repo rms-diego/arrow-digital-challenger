@@ -1,6 +1,7 @@
 import { Exception } from "../util/exception.js";
 import logger from "../util/logger.js";
 import { Error } from "mongoose";
+import jwt from "jsonwebtoken";
 
 /**
  * @description Express middleware function that handles errors and sends a JSON response with an error message and stack trace.
@@ -18,6 +19,13 @@ export const errorHandler = (err, _req, res, _next) => {
 
   if (err instanceof Error.CastError || err instanceof Error.ValidationError) {
     return res.status(400).json({ error: err.message });
+  }
+
+  if (
+    err instanceof jwt.JsonWebTokenError ||
+    err instanceof jwt.TokenExpiredError
+  ) {
+    return res.status(401).json({ message: "invalid token" });
   }
 
   logger.error(err);

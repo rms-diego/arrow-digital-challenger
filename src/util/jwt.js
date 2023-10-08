@@ -12,10 +12,16 @@ function encode(payload) {
   return token;
 }
 
+function verify(payload) {
+  const tokenDecoded = jwt.verify(payload, SECRET);
+
+  return tokenDecoded;
+}
+
 function decode(payload) {
   const tokenDecoded = jwt.decode(payload);
 
   return tokenDecoded;
 }
 
-export default { encode, decode };
+export default { encode, verify, decode };

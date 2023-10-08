@@ -1,13 +1,13 @@
 import "dotenv/config.js";
 import "express-async-errors";
 
-import express, { json } from "express";
+import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { errorHandler } from "./middlewares/errorHandler.js";
+import { errorHandler } from "./middlewares/error-handler.js";
 import api from "./api/index.js";
 
 const app = express();
@@ -16,7 +16,7 @@ const app = express();
 app.use(morgan("dev")); // logging of http calls
 app.use(helmet()); // header security
 app.use(cors()); // cross-origin resource sharing
-app.use(json()); // json parser
+app.use(express.json()); // json parser
 app.use(cookieParser()); // enable cookies
 
 // routes

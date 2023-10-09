@@ -10,7 +10,7 @@
     "start": "node main.js",
     "dev": "nodemon main.js",
     "lint": "eslint --fix",
-    "test": "mocha --exit"
+    "test": "vitest"
   },
   "keywords": [
     "express",
@@ -50,6 +50,7 @@
     "mocha": "^10.2.0",
     "mongoose-to-swagger": "^1.5.1",
     "nodemon": "^3.0.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "vitest": "^0.34.6"
   }
 }

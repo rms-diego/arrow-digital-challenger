@@ -28,9 +28,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 The objective of this test is to create an authorization API that allows the user to create, login and logout.
 This login should generate a JWT that contains:
-* The ID of the Lab **or** the ID of the Clinic that the user is tied to,
-* The permissions of the user (admin, user, etc),
-* The expiration date of the token.  
+
+- The ID of the Lab **or** the ID of the Clinic that the user is tied to,
+- The permissions of the user (admin, user, etc),
+- The expiration date of the token.
 
 This JWT authentication middleware should be used to protect the routes of the API, and to set the user context in the request object, so that the routes can use it to check if the user has the required permissions to access the route, and to get the ID of the Lab or Clinic that the user is tied to, so that the routes can use it to filter the data that is returned to the user to only the data that belongs to the Lab or Clinic that the user is tied to.
 This type of authentication is called Role Based Access Control (RBAC), and it is a very common way of handling authentication in APIs.
@@ -49,3 +50,22 @@ This type of authentication is called Role Based Access Control (RBAC), and it i
 ## License
 
 This project is licensed under the AllRights-Attribution-NonCommercial-NoDerivatives 4.1 International License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Implementation auth route
+
+POST /api/auth: is a post route that needs to pass the following payload
+
+```json
+{
+  "email": "...",
+  "password": "..."
+}
+```
+
+If the email or password has not been provided, the return will be
+
+```json
+{
+  "error": "email and password is required"
+}
+```

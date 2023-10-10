@@ -69,3 +69,17 @@ If the email or password has not been provided, the return will be
   "error": "email and password is required"
 }
 ```
+
+## running project
+
+To run the project just run the following command in the root of the project
+
+```shell
+docker compose up
+```
+
+or if you have an instance of mongodb running on the machine, just run the following command
+
+```shell
+npm start
+```

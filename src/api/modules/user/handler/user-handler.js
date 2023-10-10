@@ -1,10 +1,10 @@
-import { Exception } from "../../../../util/exception.js";
+import { Exception } from '../../../../util/exception.js'
 
 export class UserHandler {
-  #userModel;
+  #userModel
 
   constructor(userModel) {
-    this.#userModel = userModel;
+    this.#userModel = userModel
   }
 
   /**
@@ -14,15 +14,15 @@ export class UserHandler {
    */
 
   findMany = async (_req, res) => {
-    const usersFound = await this.#userModel.find();
-    const isEmpty = usersFound.length;
+    const usersFound = await this.#userModel.find()
+    const isEmpty = usersFound.length
 
     if (!isEmpty) {
-      throw new Exception("No users found", 404);
+      throw new Exception('No users found', 404)
     }
 
-    return res.status(200).json(usersFound);
-  };
+    return res.status(200).json(usersFound)
+  }
 
   /**
    * @description return one user
@@ -31,10 +31,20 @@ export class UserHandler {
    */
 
   findById = async (req, res) => {
-    const userFound = await this.#userModel.findById(req.params.id);
+    const { id } = req.params
 
-    return res.status(200).json(userFound);
-  };
+    if (!id) {
+      throw new Exception('is missing id', 400)
+    }
+
+    const userFound = await this.#userModel.findById(req.params.id)
+
+    if (!userFound) {
+      throw new Exception('user not found', 404)
+    }
+
+    return res.status(200).json(userFound)
+  }
 
   /**
    * @description create one user
@@ -43,19 +53,23 @@ export class UserHandler {
    */
 
   create = async (req, res) => {
-    const { email } = req.body;
+    const { email } = req.body
 
-    const userFound = await this.#userModel.findOne({ email });
-
-    if (userFound) {
-      throw new Exception("user already exists", 400);
+    if (!email) {
+      throw new Exception('email is required', 400)
     }
 
-    const user = new this.#userModel(req.body);
-    const userCreated = await user.save();
+    const userFound = await this.#userModel.findOne({ email })
 
-    return res.status(201).json(userCreated);
-  };
+    if (userFound) {
+      throw new Exception('user already exists', 400)
+    }
+
+    const user = new this.#userModel(req.body)
+    const userCreated = await user.save()
+
+    return res.status(201).json(userCreated)
+  }
 
   /**
    * @description update one user
@@ -64,11 +78,16 @@ export class UserHandler {
    */
 
   update = async (req, res) => {
-    const { id } = req.params;
-    await this.#userModel.findOneAndUpdate({ _id: id }, { $set: req.body });
+    const { id } = req.params
 
-    return res.status(204).end();
-  };
+    if (!id) {
+      throw new Exception('id is required', 400)
+    }
+
+    await this.#userModel.findOneAndUpdate({ _id: id }, { $set: req.body })
+
+    return res.status(204).end()
+  }
 
   /**
    * @description delete one user
@@ -77,8 +96,14 @@ export class UserHandler {
    */
 
   delete = async (req, res) => {
-    await this.#userModel.deleteOne({ _id: req.params.id });
+    const { id } = req.params
 
-    return res.status(204).end();
-  };
+    if (!id) {
+      throw new Exception('id is required', 400)
+    }
+
+    await this.#userModel.deleteOne({ _id: id })
+
+    return res.status(204).end()
+  }
 }

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+  api1:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - NODE_ENV=DEVELOPMENT
+      - LOCALHOST=LOCALHOST
+      - PORT=8080
+      - DATABASE_URI=mongodb://mongo:27017/arrow_digital_challenger
+      - SECRET=secret
+    depends_on:
+      - mongo

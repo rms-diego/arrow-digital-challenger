@@ -6,7 +6,6 @@ import { isAdminMiddleware } from '../../../middlewares/is-admin-validation.js'
 
 const router = Router()
 
-// console.log(String(User))
 const userHandler = new UserHandler(User)
 
 router.get('/', validateToken, userHandler.findMany)

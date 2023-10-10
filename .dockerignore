@@ -1,0 +1,5 @@
+node_modules
+.env*
+linkio*
+README.md
+.eslintrc.js
